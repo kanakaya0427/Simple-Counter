@@ -13,16 +13,25 @@ class CountTableViewCell: UITableViewCell {
  
     @IBOutlet var kaisuLabel : UILabel!
     @IBOutlet var naiyouLabel: UILabel!
+    
+    @IBAction func huyasu(){
+        number = number + 1
+        kaisuLabel.text = String(number)
+        changecolor()
+        
 
+    }
+    
+    @IBAction func herasu(){
+        number = number - 1
+        kaisuLabel.text = String(number)
+        changecolor()
+
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-    }
-    
-    @IBAction func kaisu(){
-        number = number + 1
-        kaisuLabel.text = String(number)
-        
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -31,4 +40,16 @@ class CountTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    func changecolor(){
+    if (number>=10){
+    kaisuLabel.textColor = UIColor.redColor()
+        }else if (number < 0){
+            kaisuLabel.textColor = UIColor.blueColor()
+        }else{
+            kaisuLabel.textColor = UIColor.blackColor()
+        }
+    
+    }
 }
+
+

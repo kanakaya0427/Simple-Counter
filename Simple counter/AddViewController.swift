@@ -12,9 +12,9 @@ class AddViewController: UIViewController {
     
     @IBOutlet weak var KinyuTextField: UITextField!
     
-    var KinyuArray: [AnyObject] = []
-    let saveData = NSUserDefaults.standardUserDefaults()
 
+    let saveData = NSUserDefaults.standardUserDefaults()
+    var KinyuArray: [AnyObject] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,23 +26,42 @@ class AddViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
     @IBAction func done(){
         let KinyuDictionary = ["naiyou":KinyuTextField.text!]
         KinyuArray.append(KinyuDictionary)
         saveData.setObject(KinyuArray,forKey: "KINYU")
         
-       KinyuTextField.text = ""
+        
+        // UIAlertControllerを作成する.
+        let myAlert: UIAlertController = UIAlertController(title: "入力が完了しました。", message: "", preferredStyle: .Alert)
+        
+        // OKのアクションを作成する.
+        let myOkAction = UIAlertAction(title: "OK", style: .Default) { action in
+            print("Action OK!!")
+        }
+        
+        // OKのActionを追加する.
+        myAlert.addAction(myOkAction)
+        
+        // UIAlertを発動する.
+        presentViewController(myAlert, animated: true, completion: nil)
+
+        
+        KinyuTextField.text = ""
     }
+    
     
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    func back(){
+    @IBAction func back(){
         self.navigationController?.popViewControllerAnimated(true)
     }
+    
+    
+
 
     /*
     // MARK: - Navigation

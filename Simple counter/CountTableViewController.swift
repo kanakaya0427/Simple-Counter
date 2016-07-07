@@ -11,12 +11,13 @@ import UIKit
 class CountTableViewController: UITableViewController {
     
 
-    
-    var KinyuArray: [AnyObject] = []
     let saveData = NSUserDefaults.standardUserDefaults()
+    var KinyuArray: [AnyObject] = []
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.leftBarButtonItem = editButtonItem()
         
         tableView.registerNib(UINib(nibName:"CountTableViewCell",bundle: nil),forCellReuseIdentifier:"cell")
         
@@ -54,7 +55,7 @@ class CountTableViewController: UITableViewController {
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)as! CountTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as! CountTableViewCell
         
         let nowIndexPathDictionary:(AnyObject) = KinyuArray[indexPath.row]
         
@@ -70,9 +71,20 @@ class CountTableViewController: UITableViewController {
     }
     
 
+    
 
 
     
+    // Override to support editing the table view.
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.Delete{
+            KinyuArray.removeAtIndex(indexPath.row)
+            //        tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+            saveData.setObject(KinyuArray, forKey: "KINYU")
+            tableView.reloadData()    }
+        
+    }
+
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
